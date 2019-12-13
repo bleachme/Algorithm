@@ -48,8 +48,11 @@ int main(void)
     printf("it will calc a + b\n");
     int c = add(a,b);
     printf("%d + %d = %d\n",a,b,c);
-*/    
+ */   
+    
+    //递归 动态规划 斐波那契
     TestRecur testRec;
+/*    
     for (int j=1; j<10; ++j)
     {
         cout<<"Fibs("<<j<<") = "<<testRec.Fibs(j)<<endl;
@@ -60,12 +63,31 @@ int main(void)
         fill(vec, vec+j+1, -1);
         cout<<"FibsUpToDown("<<j<<") = "<<testRec.FibsUpToDown(j, vec)<<endl<<endl;
     }
+*/    
     
     
     
+    /*
+例4：给定一个由0-9组成的字符串，1可以转化成A，2可以转化成B。依此类推。。
+25可以转化成Y，26可以转化成z，给一个字符串，返回能转化的字母串的有几种？
+
+    */
+    string getStr;
+    cin>>getStr;
     
+    int tmp[getStr.length()+1];
+    fill(tmp, tmp+getStr.length()+1, -1);
+    
+    int num = testRec.FibsDigToAZ(getStr.length(), getStr);
+    cout<<"num1="<<num<<endl;
+    
+    cout<<"/**************************/"<<endl;
+    num = testRec.FibsDigToAZ2(getStr.length(), getStr, tmp);
+    cout<<"num2="<<num<<endl;
     //count(c);
 
     //while(1);
     return 0;
 }
+
+

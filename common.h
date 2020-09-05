@@ -7,6 +7,8 @@
 #include <algorithm>
 #include <map>
 
+#include <memory.h>
+
 using namespace std;
 
 #endif

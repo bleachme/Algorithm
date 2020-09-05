@@ -7,8 +7,11 @@ TestRecur::TestRecur()
     for (int i=0; i<26; ++i)
     {
         m_Map_DigToAZ.insert( pair<int, char>(1+i, 'A'+i) );
-        cout<<"m_Map_DigToAZ."<<i+1<<":"<<m_Map_DigToAZ[i+1]<<endl;
+        //cout<<"m_Map_DigToAZ."<<i+1<<":"<<m_Map_DigToAZ[i+1]<<endl;
     }
+    
+    memset(rectangle, 0, 10*10);
+    M=N=0;
 }
 
 TestRecur::~TestRecur()
@@ -200,3 +203,114 @@ int TestRecur::FibsDigToAZ2(int n, string gStr, int known[])
     cout<<"known["<<n<<"]="<<known[n]<<endl;
     return temp;
 }
+
+
+/*
+    给一个由数字组成的矩阵，初始在左上角，要求每次只能向下或向右移动，
+    路径和就是经过的数字全部加起来，求可能的最小路径和
+    MinDirNum(i,j) = min(MinDirNum(i, j-1), MinDirNum(i-1, j)) +v[i][j]
+*/
+int TestRecur::GetMinDir()
+{
+    FILE *fp = freopen("ini.txt", "r", stdin);
+    
+    string info;
+    
+    while(cin>>info)
+    {
+        memset(rectangle, 0, 10*10); //record
+        memset(record, 0, 10*10);
+        M=N=0;
+    
+        cout<<"info:"<<info<<endl;
+        if (info.find("*"))
+        {
+            //get M N
+            const char* pInfo = info.c_str();
+            M = atoi(&pInfo[0]);
+            N = atoi(&pInfo[2]);
+        }
+        cout<<"M="<<M<<", N="<<N<<endl;
+        
+        //int rec[M][N] = {0};
+        for(int i=0; i<M; ++i)
+        {
+            for(int j=0; j<N; ++j)
+            {
+                cin>>rectangle[i][j];
+                cout<<rectangle[i][j];
+            }
+            cout<<endl;
+        }
+        
+        //calculate
+        int ret = 0;
+        ret = MinDirNum(M-1, N-1);
+        cout<<"ret = "<<ret<<endl;
+        
+        cout<<"record:"<<endl;
+        for(int i=0; i<M; ++i)
+        {
+            for(int j=0; j<N; ++j)
+            {
+                 
+                cout<<record[i][j]<<" ";
+            }
+            cout<<endl;
+        }
+    }
+    
+    fclose(fp);
+}
+    
+    
+int TestRecur::MinDirNum(int m, int n)
+{
+    /*
+    cout<<"***********"<<endl;
+    
+    for(int i=0; i<m; ++i)
+    {
+        for(int j=0; j<n; ++j)
+        {
+            
+            cout<<rectangle[i][j];
+        }
+        cout<<endl;
+    }
+    */
+    
+    //MinDirNum(i,j) = min(MinDirNum(i, j-1), MinDirNum(i-1, j)) +v[i][j]
+    if(record[m][n]>0)
+    {
+        return record[m][n];
+    }
+    
+    int tmp = 0;
+    if (m == 0 && n == 0)
+    {
+        tmp = rectangle[m][n];
+    }
+    else if (m == 0 && n != 0)
+    {
+        tmp = MinDirNum(m, n-1) + rectangle[m][n];
+    }
+    else if (m != 0 && n == 0)
+    {
+        tmp = MinDirNum(m-1, n) + rectangle[m][n];
+    }
+    else
+    {
+        int up = MinDirNum(m-1, n);
+        int left = MinDirNum(m, n-1);
+        int mini = left <= up ? left : up;
+        cout<<"up="<<up<<", left="<<left<<", mini = "<<mini<<endl;
+        tmp = mini + rectangle[m][n];
+    }
+    
+    record[m][n] = tmp;
+    return tmp;
+}
+
+
+

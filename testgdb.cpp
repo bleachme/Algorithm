@@ -1,5 +1,6 @@
 /*gdbStep.c*/
 #include "TestRecur.h"
+#include "TestSort.h"
 #include "common.h"
 /*计算简单乘法,这里没有考虑溢出*/
 
@@ -66,7 +67,7 @@ int main(void)
 */    
     
     
-    
+#if 0    
     /*
 例4：给定一个由0-9组成的字符串，1可以转化成A，2可以转化成B。依此类推。。
 25可以转化成Y，26可以转化成z，给一个字符串，返回能转化的字母串的有几种？
@@ -85,6 +86,21 @@ int main(void)
     num = testRec.FibsDigToAZ2(getStr.length(), getStr, tmp);
     cout<<"num2="<<num<<endl;
     //count(c);
+#endif  
+
+    //testRec.GetMinDir();  
+     
+
+    TestSort<int> sortTest;
+    int sortVec[10] = {2,1,5,3,0,7,6,5,5,6};
+    sortTest.BubbleSort(sortVec, 10);
+    prinMe(sortVec, 10);
+    //sortTest.prin(sortVec, 10);
+    
+    int sortVec2[10] = {9,8,7,6,0,5,4,2,3,1};
+    sortTest.BubbleSort2(sortVec2, 10);
+    //prinMe<int>(sortVec2, 10);
+    prinMe (sortVec2, 10);
 
     //while(1);
     return 0;
